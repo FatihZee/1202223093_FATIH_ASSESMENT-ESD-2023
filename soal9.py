@@ -1,24 +1,26 @@
 from collections import Counter
 
-def deteksi_anak_nakal(anak):
-    hasil_analisis = analisis_anak(anak)
-    
-    maksimal_sebutan = max(hasil_analisis.values())
-    nama_nakal = [nama for nama, jumlah in hasil_analisis.items() if jumlah == maksimal_sebutan]
-    
-    if len(nama_nakal) > 1:
-        return " dan ".join(nama_nakal) + " Nackal"
-    elif len(nama_nakal) == 1:
-        return f"{nama_nakal[0]} Nackal"
-    else:
+def deteksi_anak_nakal(daftar_nama):
+    counter_nama = Counter(daftar_nama)
+    jumlah_kemunculan = counter_nama.most_common()
+
+    if jumlah_kemunculan[0][1] == 1:
         return "Semuanya anak baik"
+    elif jumlah_kemunculan[0][1] == jumlah_kemunculan[1][1]:
+        anak_nakal = " dan ".join([nama for nama, count in jumlah_kemunculan if count == jumlah_kemunculan[0][1]])
+        return f"{anak_nakal} Nackal"
+    else:
+        anak_nakal = jumlah_kemunculan[0][0]
+        return f"{anak_nakal} Nackal"
 
-def analisis_anak(anak):
-    return Counter(anak)
+input_test = ["Bagas", "Dimas", "Bagas", "Bagas", "Indra", "Gilang", "Gilang", "Hana", "Fajar", "Fajar"]
+output_test = deteksi_anak_nakal(input_test)
+print(output_test)
 
-nama_anak_input = input("Masukkan nama-nama anak (pisahkan dengan spasi): ")
-nama_anak = nama_anak_input.replace("“", "").replace("”", "").replace(",", "").split()
+input_test2 = ["Bagas", "Dimas", "Fajar", "Bagas", "Indra", "Gilang", "Gilang", "Bagas", "Fajar", "Fajar"]
+output_test2 = deteksi_anak_nakal(input_test2)
+print(output_test2)
 
-hasil_deteksi = deteksi_anak_nakal(nama_anak)
-
-print(f"Nama anak yang nakal: {hasil_deteksi}")
+input_test3 = ["Aisyah", "Bagas", "Dewi", "Dimas", "Eka", "Fajar", "Gilang", "Hana", "Indra", "Jihan"]
+output_test3 = deteksi_anak_nakal(input_test3)
+print(output_test3)

@@ -17,3 +17,10 @@ total_belanja = int(input("Masukkan total belanja: "))
 
 hasil_kembalian = hitung_kembalian(total_pembayaran, total_belanja)
 print(f"{total_pembayaran} - {total_belanja} = {hasil_kembalian}")
+
+# Output in reversed order
+output_str = "{"
+for denom, jumlah in reversed(list(hasil_kembalian.items())):
+    output_str += f'"{denom}": {jumlah}, '
+output_str = output_str.rstrip(", ") + "}"
+print(f"\nOutput akhir{output_str}")
